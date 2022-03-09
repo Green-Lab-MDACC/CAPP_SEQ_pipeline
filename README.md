@@ -23,4 +23,11 @@ fgbio:http://fulcrumgenomics.github.io/fgbio/
 
 # Usage
 
-The pipeline perform duplex read consensus calling and single-strand consensus calling using the *--call_type* flag.
+The pipeline perform duplex read consensus calling and single-strand consensus calling using the ```--call_type``` flag.
+
+The # of single strand consensus reads required for dupelx calling can also be specificed using the ```--min_read``` flag. Default = 1
+
+Read strucutre must be specified for extracting and grouping UMIs. For more on read structure, see https://github.com/fulcrumgenomics/fgbio/wiki/Read-Structures
+
+Variants are called using GATK ```HaplotypeCaller``` and ```Mutect2```
+
