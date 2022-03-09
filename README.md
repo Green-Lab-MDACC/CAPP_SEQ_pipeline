@@ -29,6 +29,10 @@ Inputs:
 
 ``` Panel_ID``` 
 
+```call_type```
+
+```min_read```
+
 Required Files:
 
 ``` ${Sample_ID}_R1.fastq.gz```  raw R1 FASTQ saved under "data/FASTQ"
