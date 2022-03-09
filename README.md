@@ -34,8 +34,9 @@ Required Files:
 ``` ${Sample_ID}_R1.fastq.gz```  raw R1 FASTQ saved under "data/FASTQ"
 ``` ${Sample_ID}_R2.fastq.gz```  raw R2 FASTQ saved under "data/FASTQ"
 
-``` ${Panel_ID}.baits.hs38DH.interval_list``` BAIT interval file saved under "data/panel"
-``` ${Panel_ID}.targets.hs38DH.interval_list``` Target interval file saved under "data/panel"
+``` ${Panel_ID}.baits.hs38DH.interval_list```   BAIT interval file saved under "data/panel"
+
+``` ${Panel_ID}.targets.hs38DH.interval_list```   Target interval file saved under "data/panel"
 
 hg38 ref genome: path to ```Homo_sapiens_assembly38.fasta```
 
