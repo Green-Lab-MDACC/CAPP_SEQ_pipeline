@@ -21,3 +21,6 @@ GATK4: https://gatk.broadinstitute.org/hc/en-us
 fgbio:http://fulcrumgenomics.github.io/fgbio/
 
 
+# Usage
+
+The pipeline perform duplex read consensus calling and single-strand consensus calling using the **--call_type** flag.
