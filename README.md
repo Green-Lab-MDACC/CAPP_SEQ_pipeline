@@ -23,11 +23,27 @@ fgbio:http://fulcrumgenomics.github.io/fgbio/
 
 # Usage
 
+Inputs:
+
+``` Sample_ID``` 
+
+``` Panel_ID``` 
+
+Required Files:
+
+``` ${Sample_ID}_R1.fastq.gz```  saved under "data/FASTQ"
+``` ${Sample_ID}_R2.fastq.gz```  saved under "data/FASTQ"
+
+``` ${Panel_ID}_R2.fastq.gz``` BAIT interval file saved under "data/panel"
+``` ${Panel_ID}_R2.fastq.gz``` Target interval file saved under "data/panel"
+
 The pipeline perform duplex read consensus calling and single-strand consensus calling using the ```--call_type``` flag.
 
 The # of single strand consensus reads required for dupelx calling can also be specificed using the ```--min_read``` flag. Default = 1
 
 Read strucutre must be specified for extracting and grouping UMIs. For more on read structure, see https://github.com/fulcrumgenomics/fgbio/wiki/Read-Structures
+
+CAPP SEQ Metrics are computed using Picard ```CollectHsMetrics```
 
 Variants are called using GATK ```HaplotypeCaller``` and ```Mutect2```
 
