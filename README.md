@@ -31,11 +31,22 @@ Inputs:
 
 Required Files:
 
-``` ${Sample_ID}_R1.fastq.gz```  saved under "data/FASTQ"
-``` ${Sample_ID}_R2.fastq.gz```  saved under "data/FASTQ"
+``` ${Sample_ID}_R1.fastq.gz```  raw R1 FASTQ saved under "data/FASTQ"
+``` ${Sample_ID}_R2.fastq.gz```  raw R2 FASTQ saved under "data/FASTQ"
 
-``` ${Panel_ID}_R2.fastq.gz``` BAIT interval file saved under "data/panel"
-``` ${Panel_ID}_R2.fastq.gz``` Target interval file saved under "data/panel"
+``` ${Panel_ID}.baits.hs38DH.interval_list``` BAIT interval file saved under "data/panel"
+``` ${Panel_ID}.targets.hs38DH.interval_list``` Target interval file saved under "data/panel"
+
+hg38 ref genome: ```Homo_sapiens_assembly38.fasta``` saved under data/hg38
+BWA_INDEX: ```Homo_sapiens_assembly38.fasta``` saved under data/hg38
+
+
+BWA_INDEX=$PWD/bnsugg/duplex_pipeline/data/hg38/bwa/hg38
+REFGENOME=$PWD/bnsugg/duplex_pipeline/data/hg38/Homo_sapiens_assembly38.fasta
+
+
+
+
 
 The pipeline perform duplex read consensus calling and single-strand consensus calling using the ```--call_type``` flag.
 
