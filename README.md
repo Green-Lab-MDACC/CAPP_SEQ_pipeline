@@ -31,7 +31,7 @@ Inputs:
 
 ```call_type```  Options = ```Duplex``` or ```Single```
 
-```min_read```   Options = ```0``` or ```1```
+```min_read```
 
 ```READ_STRUCTURE```
 
