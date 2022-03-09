@@ -38,9 +38,9 @@ Required Files:
 
 ``` ${Panel_ID}.targets.hs38DH.interval_list```   Target interval file saved under "data/panel"
 
-hg38 ref genome: path to ```Homo_sapiens_assembly38.fasta```
+```REFGENOME``` path to ucsc Homo_sapiens_assembly38.fasta
 
-BWA_INDEX: path to ```Homo_sapiens_assembly38.fasta```
+```BWA_INDEX``` path to hg38 bwa index
 
 The pipeline perform duplex read consensus calling and single-strand consensus calling using the ```--call_type``` flag.
 
