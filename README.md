@@ -2,8 +2,7 @@
 
 Documentation of pipeline for processing of hybrid capture end reads of WGS data. Pipeline accepts raw FASTQ forward and reverse reads and performs duplex UMI consensus and/or single strand UMI consensus variant calling.
 
-![image](https://user-images.githubusercontent.com/92883998/153476648-7e32a101-b974-4540-a137-ad8dd9e7a704.png)
-
+![image](https://user-images.githubusercontent.com/92883998/157540760-79000d43-a81b-4e36-8d7f-ac1d4b62aeb3.png)
 
 # Required Packages
 
@@ -18,8 +17,6 @@ trimmomatic http://www.usadellab.org/cms/?page=trimmomatic
 samtools http://samtools.sourceforge.net/
 
 GATK4: https://gatk.broadinstitute.org/hc/en-us
-
-copywriteR: https://github.com/PeeperLab/CopywriteR
 
 fgbio:http://fulcrumgenomics.github.io/fgbio/
 
