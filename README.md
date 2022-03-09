@@ -40,14 +40,6 @@ Required Files:
 hg38 ref genome: ```Homo_sapiens_assembly38.fasta``` saved under data/hg38
 BWA_INDEX: ```Homo_sapiens_assembly38.fasta``` saved under data/hg38
 
-
-BWA_INDEX=$PWD/bnsugg/duplex_pipeline/data/hg38/bwa/hg38
-REFGENOME=$PWD/bnsugg/duplex_pipeline/data/hg38/Homo_sapiens_assembly38.fasta
-
-
-
-
-
 The pipeline perform duplex read consensus calling and single-strand consensus calling using the ```--call_type``` flag.
 
 The # of single strand consensus reads required for dupelx calling can also be specificed using the ```--min_read``` flag. Default = 1
