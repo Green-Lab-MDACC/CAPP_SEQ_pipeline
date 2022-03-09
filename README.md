@@ -29,9 +29,11 @@ Inputs:
 
 ``` Panel_ID``` 
 
-```call_type```
+```call_type```  Options = ```Duplex``` or ```Single```
 
-```min_read```
+```min_read```   Options = ```0``` or ```1```
+
+```READ_STRUCTURE```
 
 Required Files:
 
