@@ -52,17 +52,18 @@ Required Files:
 
 ```BWA_INDEX``` path to hg38 bwa index
 
-Optional:  ```PON.csv``` pipeline output for PONs saved under "data/PON" 
+Optional:  ```PoN.csv``` pipeline output for PoNs saved under "data/PoN" 
 
-The pipeline perform duplex read consensus calling and single-strand consensus calling using the ```--call_type``` flag.
+The pipeline perform duplex read consensus calling and single-strand consensus calling using the ```call_type``` flag.
 
-The # of single strand consensus reads required for dupelx calling can also be specificed using the ```--min_read``` flag. Default = 1 see http://fulcrumgenomics.github.io/fgbio/tools/latest/CallDuplexConsensusReads.html
+The # of single strand consensus reads required for dupelx calling can also be specificed using the ```min_read``` flag. Default = 1 see http://fulcrumgenomics.github.io/fgbio/tools/latest/CallDuplexConsensusReads.html
 
-Read strucutre must be specified for extracting and grouping UMIs. For more on read structure, see https://github.com/fulcrumgenomics/fgbio/wiki/Read-Structures
+Read structure must be specified for extracting and grouping UMIs with ```READ_STRUCTURE`` flag. For more on read structure, see https://github.com/fulcrumgenomics/fgbio/wiki/Read-Structures
 
-CAPP SEQ Metrics are computed using Picard ```CollectHsMetrics```
+
+CAPP SEQ Metrics are computed using Picard ```CollectHsMetrics``` output to directory in csv format.
 
 Variants are called using GATK ```HaplotypeCaller``` and ```Mutect2```
 
-Variants combined and post-processed in Python script
+Variants combined and post-processed filtered in Python script with an optional PoNs filter and output in csv format.
 
