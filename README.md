@@ -24,17 +24,20 @@ fgbio:http://fulcrumgenomics.github.io/fgbio/
 
 # Usage
 
-Inputs:
+Inputs: (modify inside shell script)
 
 ``` Sample_ID``` 
 
 ``` Panel_ID``` 
 
-```call_type```  Options = ```Duplex``` or ```Single```
+```call_type```  Options = ```Duplex``` or ```Single``` Default = ```Duplex```
 
-```min_read```
+```min_read``` Default = ```1```
 
-```READ_STRUCTURE```
+```READ_STRUCTURE``` Default = ```9M+T 9M+T```
+
+
+
 
 Required Files:
 
@@ -49,13 +52,17 @@ Required Files:
 
 ```BWA_INDEX``` path to hg38 bwa index
 
+Optional:  ```PON.csv``` pipeline output for PONs saved under "data/PON" 
+
 The pipeline perform duplex read consensus calling and single-strand consensus calling using the ```--call_type``` flag.
 
-The # of single strand consensus reads required for dupelx calling can also be specificed using the ```--min_read``` flag. Default = 1
+The # of single strand consensus reads required for dupelx calling can also be specificed using the ```--min_read``` flag. Default = 1 see http://fulcrumgenomics.github.io/fgbio/tools/latest/CallDuplexConsensusReads.html
 
 Read strucutre must be specified for extracting and grouping UMIs. For more on read structure, see https://github.com/fulcrumgenomics/fgbio/wiki/Read-Structures
 
 CAPP SEQ Metrics are computed using Picard ```CollectHsMetrics```
 
 Variants are called using GATK ```HaplotypeCaller``` and ```Mutect2```
+
+Variants combined and post-processed in Python script
 
