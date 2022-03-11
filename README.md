@@ -2,7 +2,8 @@
 
 Documentation of pipeline for processing of hybrid capture end reads of WGS data. Pipeline accepts raw FASTQ forward and reverse reads and performs duplex UMI consensus and/or single strand UMI consensus variant calling.
 
-![image](https://user-images.githubusercontent.com/92883998/157540760-79000d43-a81b-4e36-8d7f-ac1d4b62aeb3.png)
+![image](https://user-images.githubusercontent.com/92883998/157908176-ae0d0d86-72b1-4748-ac74-dd3d2ea2d08f.png)
+
 
 # Required Packages
 
