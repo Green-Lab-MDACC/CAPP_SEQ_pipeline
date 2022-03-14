@@ -58,7 +58,7 @@ The pipeline perform duplex read consensus calling and single-strand consensus c
 
 The # of single strand consensus reads required for dupelx calling can also be specificed using the ```min_read``` flag. Default = 1 see http://fulcrumgenomics.github.io/fgbio/tools/latest/CallDuplexConsensusReads.html
 
-Read structure must be specified for extracting and grouping UMIs with ```READ_STRUCTURE`` flag. For more on read structure, see https://github.com/fulcrumgenomics/fgbio/wiki/Read-Structures
+Read structure must be specified for extracting and grouping UMIs with ```READ_STRUCTURE``` flag. For more on read structure, see https://github.com/fulcrumgenomics/fgbio/wiki/Read-Structures
 
 
 CAPP SEQ Metrics are computed using Picard ```CollectHsMetrics``` output to directory in csv format.
