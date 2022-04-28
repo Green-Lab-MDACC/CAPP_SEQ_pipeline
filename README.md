@@ -24,7 +24,7 @@ fgbio:http://fulcrumgenomics.github.io/fgbio/
 
 # Usage
 
-Inputs: (modify inside shell script)
+Inputs:
 
 ``` Sample_ID``` 
 
