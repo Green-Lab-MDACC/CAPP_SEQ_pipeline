@@ -95,6 +95,7 @@ Align to hg38 and merge using bwa mem and Picard
     java -jar $PICARD MergeBamAlignment -UNMAPPED $FGBIO_FASTQTOBAM_OUT -ALIGNED $BWA_TEMP_SAM -O $PICARD_MERGEBAMALIGNMENT_OUT -R $REFGENOME -SO coordinate -- ALIGNER_PROPER_PAIR_FLAGS true -MAX_GAPS -1 -ORIENTATIONS FR -VALIDATION_STRINGENCY SILENT -CREATE_INDEX true
 
 Grouped paired reads by UMI using fgbio GroupReadsByUmi (paired for duplex and adjancency for SSC)
+
       java -jar $FGBIO GroupReadsByUmi -i $PICARD_MERGEBAMALIGNMENT_OUT -o $FGBIO_GROUPED_OUT -s paired --edits 0 --min-map-q $MIN_MAP_QUAL -f $UMI_CALLS_FAMILY_HISTOGRAM
 
       java -jar $FGBIO GroupReadsByUmi -i $PICARD_MERGEBAMALIGNMENT_OUT -o $FGBIO_GROUPED_OUT -s adjacency --edits 0 --min-map-q $MIN_MAP_QUAL -f UMI_CALLS_FAMILY_HISTOGRAM
