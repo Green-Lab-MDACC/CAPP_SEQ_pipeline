@@ -84,22 +84,32 @@ Convert FASTQ to unaligned BAM
      java -jar $FGBIO FastqToBam --input $FIRST_FASTQ $SECOND_FASTQ \
      --output $FGBIO_FASTQTOBAM_OUT --read-structures $READ_STRUCTURE --sort true --read-group-id $RG_PU --sample $SAMPLE_ID --platform-unit $RG_PU --library   $SAMPLE_ID
      
-EXTRACT UMIs from unaligned BAM using read structure
+Extract UMIs from unaligned BAM using read structure
 
     java -jar $FGBIO ExtractUmisFromBam -i $FGBIO_FASTQTOBAM_OUT -o $FGBIO_FASTQTOBAM_EXTRACTED_OUT -r $READ_STRUCTURE -t ZA ZB -s RX
  
-ALIGN TO hg38 AND MERGE using bwa mem
+Align to hg38 and merge using bwa mem and Picard
+
     bwa mem -t 4 -M -w 2 -p -R $READGROUP $BWA_INDEX $PICARD_SAMTOFASTQ_OUT > $BWA_TEMP_SAM
 
     java -jar $PICARD MergeBamAlignment -UNMAPPED $FGBIO_FASTQTOBAM_OUT -ALIGNED $BWA_TEMP_SAM -O $PICARD_MERGEBAMALIGNMENT_OUT -R $REFGENOME -SO coordinate -- ALIGNER_PROPER_PAIR_FLAGS true -MAX_GAPS -1 -ORIENTATIONS FR -VALIDATION_STRINGENCY SILENT -CREATE_INDEX true
 
-GROUPED PAIRED READS BY UMI (Consensus Calling)
+Grouped paired reads by UMI using fgbio GroupReadsByUmi (paired for duplex and adjancency for SSC)
     java -jar $FGBIO GroupReadsByUmi -i $PICARD_MERGEBAMALIGNMENT_OUT -o $FGBIO_GROUPED_OUT -s paired --edits 0 --min-map-q $MIN_MAP_QUAL -f $UMI_CALLS_FAMILY_HISTOGRAM
 
     java -jar $FGBIO GroupReadsByUmi -i $PICARD_MERGEBAMALIGNMENT_OUT -o $FGBIO_GROUPED_OUT -s adjacency --edits 0 --min-map-q $MIN_MAP_QUAL -f UMI_CALLS_FAMILY_HISTOGRAM
 
-CALL CONSENSUS READS based on $DUBLE_CONSENSUS (required reads for d
+
+CALL CONSENSUS READS using fgbio based on $SINGLE_CONSENSUS (# of single consensus reads required to make a SSC call) and DOUBLE_CONSENSUS (# of SSC calls required to make a duplex call)
 
     java -jar $FGBIO CallDuplexConsensusReads -i $FGBIO_GROUPED_OUT -o $FGBIO_CALLDUPLEXCONSENSUS_GROUPED_OUT --error-rate-pre-umi 45 --error-rate-post-umi 40 --min-input-base-quality $MIN_MAP_QUAL --min-reads $DOUBLE_CONSENSUS $SINGLE_CONSENSUS $SINGLE_CONSENSUS
 
     java -jar $FGBIO CallMolecularConsensusReads -i $FGBIO_GROUPED_OUT -o $FGBIO_CALLDUPLEXCONSENSUS_GROUPED_OUT --error-rate-pre-umi 30 --min-reads $SINGLE_CONSENSUS --error-rate-post-umi 30 --min-input-base-quality $MIN_MAP_QUAL
+    
+Re-Align to hg38 and merge using bwa mem and Picard
+
+java -jar $PICARD SamToFastq -I $FGBIO_CALLDUPLEXCONSENSUS_GROUPED_OUT -F $PICARD_SAMTOFASTQ_CALLDUPLEXCONSENSUS_OUT -INTER true
+
+bwa mem -t 4 -p $BWA_INDEX $PICARD_SAMTOFASTQ_CALLDUPLEXCONSENSUS_OUT > $BWA_TEMP_SAM_2
+
+java -jar $PICARD MergeBamAlignment -UNMAPPED $FGBIO_CALLDUPLEXCONSENSUS_GROUPED_OUT -ALIGNED $BWA_TEMP_SAM_2 -O $PICARD_SAMTOFASTQ_CALLDUPLEXCONSENSUS_MAPPED_OUT -R $REFGENOME -SO coordinate --ALIGNER_PROPER_PAIR_FLAGS true -MAX_GAPS -1 -ORIENTATIONS FR -VALIDATION_STRINGENCY SILENT -CREATE_INDEX true
