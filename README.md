@@ -114,3 +114,29 @@ Re-Align to hg38 and merge using bwa mem and Picard
       bwa mem -t 4 -p $BWA_INDEX $PICARD_SAMTOFASTQ_CALLDUPLEXCONSENSUS_OUT > $BWA_TEMP_SAM_2
 
       java -jar $PICARD MergeBamAlignment -UNMAPPED $FGBIO_CALLDUPLEXCONSENSUS_GROUPED_OUT -ALIGNED $BWA_TEMP_SAM_2 -O $PICARD_SAMTOFASTQ_CALLDUPLEXCONSENSUS_MAPPED_OUT -R   $REFGENOME -SO coordinate --ALIGNER_PROPER_PAIR_FLAGS true -MAX_GAPS -1 -ORIENTATIONS FR -VALIDATION_STRINGENCY SILENT -CREATE_INDEX true
+
+Filter Reads for error rate and quality
+
+    java -jar $FGBIO FilterConsensusReads --input $PICARD_SAMTOFASTQ_CALLDUPLEXCONSENSUS_MAPPED_OUT --output $GATK_REALIGNTARGETSFILT --ref $REFGENOME --min-reads $DOUBLE_CONSENSUS $SINGLE_CONSENSUS $SINGLE_CONSENSUS --max-read-error-rate 0.025 --max-base-error-rate .1 --min-base-quality $MIN_MAP_QUAL	 
+
+    java -jar $FGBIO FilterConsensusReads --input $PICARD_SAMTOFASTQ_CALLDUPLEXCONSENSUS_MAPPED_OUT --output $GATK_REALIGNTARGETSFILT --ref $REFGENOME -M $SINGLE_CONSENSUS --max-read-error-rate 0.025 --max-base-error-rate .1 --min-base-quality $MIN_MAP_QUAL
+
+
+CLIP overlapping reads to avoid duplicate variant calling
+
+    java -jar $FGBIO ClipBam --input $GATK_REALIGNTARGETSFILT --output $GATK_REALIGNTARGETSFILTCLIPPED --ref $REFGENOME --clip-overlapping-reads true
+
+CALL VARIANTS USING HAPLOTYPECALLER AND MUTECT
+
+    java -jar $GATK Mutect2 -I $GATK_REALIGNTARGETSFILTCLIPPED -R $REFGENOME -O $VARIANTS_CALLED --max-reads-per-alignment-start 0 
+    java -jar $GATK HaplotypeCaller  -I $GATK_REALIGNTARGETSFILTCLIPPED -R $REFGENOME -O $FINAL_CALLS
+
+Convert VCF to Table with GATK
+
+    java -jar $GATK VariantsToTable -V $VARIANTS_CALLED -F CHROM -F POS -F TYPE -F ALT -F REF -GF AD -GF DP -O $VARIANTS_CALLED_TABLE
+
+
+ENUMERATE READS using bcftools
+
+    bcftools view -i 'FORMAT/DP>100' $ENUM_VCF > $ENUM_FILT_VCF
+    java -jar $GATK VariantsToTable -V $ENUM_FILT_VCF -F CHROM -F POS -F TYPE -F ALT -F REF -F QUAL -F DP -F DP4 -GF AD -O $FINAL_ENUM_TABLE
