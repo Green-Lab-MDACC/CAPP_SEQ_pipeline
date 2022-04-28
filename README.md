@@ -32,7 +32,7 @@ Inputs:
 
 ```call_type```  Options = ```Duplex``` or ```Single``` Default = ```Duplex```
 
-```min_read``` Default = ```1```
+```min_read``` Default = ```2``` for Single
 
 ```READ_STRUCTURE``` Default = ```9M+T 9M+T```
 
