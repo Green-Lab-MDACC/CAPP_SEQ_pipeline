@@ -3,45 +3,18 @@
 #USER INPUTS
 #SAVE FASTQ FILES UNDER FASTQ FOLDER WITH FILE NAME MATCHING SAMPLE_ID_R1 AND SAMPLE_ID_R2
 #CONSENSUS: "DUPLEX" FOR DUPLEX CONSENSUS CALLING. "SINGLE" FOR SINGLE STRAND CONSENSUS CALLING. (CREATES A NEW FOLDER NAMED THIS UNDER SAMPLE NAME)
+#Written for PA19 data set
+
 SAMPLE_ID="PA19"
 
 for i in 'MM0014_001'
-
-# 'MM0018_002' \
-# 'MM0019_002' \
-# 'MM0021_002' \
-# 'MM0027_002' \
-# 'MM0031_002' \
-# 'MM0008_001' \
-# 'MM0009_001' \
-# 'MM0011_001' \
-# 'MM0012_001' \
-# 'MM0014_002' \
-# 'MM0015_001' \
-# 'MM0018_001' \
-# 'MM0019_001' \
-# 'MM0021_001' \
-# 'MM0027_001' \
-# 'MM0031_001' \
-# 'MM0008_002' \
-# 'MM0009_002' \
-# 'MM0011_002' \
-# 'MM0012_002' \
-# 'MM0014_001' \
-# 'MM0015_002' \
-# 'MM0018_002' \
-# 'MM0019_002' \
-# 'MM0021_002' \
-# 'MM0027_002' \
-# 'MM0031_002'
-
 
 do
 
     SAMPLE_NAME=$i
     SAMPLE_ID_R1="${SAMPLE_NAME}_R1"
     SAMPLE_ID_R2="${SAMPLE_NAME}_R2"
-    CONSENSUS="DUPLEXOLD" #"DUPLEX" or "SINGLE"
+    CONSENSUS="DUPLEX" #"DUPLEX" or "SINGLE"
     WORKING_DIR=$PWD/bnsugg/duplex_pipeline
     MIN_MAP_QUAL=30
     SINGLE_CONSENSUS=3 #NUMBER OF CONSENSUS READS REQUIRED FOR SINGLE STRAND CALL #http://fulcrumgenomics.github.io/fgbio/tools/latest/CallMolecularConsensusReads.html
@@ -161,7 +134,7 @@ do
 
     #GROUPED PAIRED READS BY UMI
     if test -f "$PICARD_MERGEBAMALIGNMENT_OUT"; then
-        if [ $CONSENSUS = "DUPLEXOLD" ]; then
+        if [ $CONSENSUS = "DUPLEX" ]; then
             java -jar $FGBIO GroupReadsByUmi -i $PICARD_MERGEBAMALIGNMENT_OUT -o $FGBIO_GROUPED_OUT -s paired --edits 0 --min-map-q $MIN_MAP_QUAL -f $UMI_CALLS_FAMILY_HISTOGRAM
         else
             java -jar $FGBIO GroupReadsByUmi -i $PICARD_MERGEBAMALIGNMENT_OUT -o $FGBIO_GROUPED_OUT -s adjacency --edits 0 --min-map-q $MIN_MAP_QUAL -f $UMI_CALLS_FAMILY_HISTOGRAM
@@ -171,7 +144,7 @@ do
 
     #CALL CONSENSUS READS
     if test -f "$FGBIO_GROUPED_OUT"; then
-        if [ $CONSENSUS = "DUPLEXOLD" ]; then
+        if [ $CONSENSUS = "DUPLEX" ]; then
             java -jar $FGBIO CallDuplexConsensusReads -i $FGBIO_GROUPED_OUT -o $FGBIO_CALLDUPLEXCONSENSUS_GROUPED_OUT --error-rate-pre-umi 45 --error-rate-post-umi 40 --min-input-base-quality $MIN_MAP_QUAL --min-reads $DOUBLE_CONSENSUS $SINGLE_CONSENSUS $SINGLE_CONSENSUS
         else
             java -jar $FGBIO CallMolecularConsensusReads -i $FGBIO_GROUPED_OUT -o $FGBIO_CALLDUPLEXCONSENSUS_GROUPED_OUT --error-rate-pre-umi 30 --min-reads $SINGLE_CONSENSUS --error-rate-post-umi 30 --min-input-base-quality $MIN_MAP_QUAL
@@ -199,7 +172,7 @@ do
 
     #FILTER READS
     if test -f "$PICARD_SAMTOFASTQ_CALLDUPLEXCONSENSUS_MAPPED_OUT"; then
-        if [ $CONSENSUS = "DUPLEXOLD" ]; then
+        if [ $CONSENSUS = "DUPLEX" ]; then
             java -jar $FGBIO FilterConsensusReads --input $PICARD_SAMTOFASTQ_CALLDUPLEXCONSENSUS_MAPPED_OUT --output $GATK_REALIGNTARGETSFILT --ref $REFGENOME --min-reads $DOUBLE_CONSENSUS $SINGLE_CONSENSUS $SINGLE_CONSENSUS --max-read-error-rate 0.025 --max-base-error-rate .1 --min-base-quality $MIN_MAP_QUAL	 
         else
             java -jar $FGBIO FilterConsensusReads --input $PICARD_SAMTOFASTQ_CALLDUPLEXCONSENSUS_MAPPED_OUT --output $GATK_REALIGNTARGETSFILT --ref $REFGENOME -M $SINGLE_CONSENSUS --max-read-error-rate 0.025 --max-base-error-rate .1 --min-base-quality $MIN_MAP_QUAL
