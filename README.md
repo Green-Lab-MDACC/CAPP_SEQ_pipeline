@@ -138,5 +138,10 @@ Convert VCF to Table with GATK
 
 ENUMERATE READS using bcftools
 
-    bcftools view -i 'FORMAT/DP>100' $ENUM_VCF > $ENUM_FILT_VCF
+    bcftools mpileup -f $REFGENOME --max-depth 0 $BQSR_BAM -a "FORMAT/AD,FORMAT/ADF,FORMAT/ADR,FORMAT/DP,FORMAT/SP" | bcftools call -A -m > $ENUM_VCF
+
     java -jar $GATK VariantsToTable -V $ENUM_FILT_VCF -F CHROM -F POS -F TYPE -F ALT -F REF -F QUAL -F DP -F DP4 -GF AD -O $FINAL_ENUM_TABLE
+
+POST PROCESS VARIANTS
+
+    python $WORKING_DIR/scripts/seq_post_process.py ${SAMPLE_NAME} ${VARIANTS_CALLED_TABLE} ${FINAL_CALLS_TABLE} ${PONPATH} ${SAMPLE_ID} ${CONSENSUS}
