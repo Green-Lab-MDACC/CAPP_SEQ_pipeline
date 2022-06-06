@@ -126,10 +126,12 @@ CLIP overlapping reads to avoid duplicate variant calling
 
     java -jar $FGBIO ClipBam --input $GATK_REALIGNTARGETSFILT --output $GATK_REALIGNTARGETSFILTCLIPPED --ref $REFGENOME --clip-overlapping-reads true
 
-CALL VARIANTS USING HAPLOTYPECALLER AND MUTECT
+CALL VARIANTS USING HAPLOTYPECALLER MUTECT AND VARDICT
 
     java -jar $GATK Mutect2 -I $GATK_REALIGNTARGETSFILTCLIPPED -R $REFGENOME -O $VARIANTS_CALLED --max-reads-per-alignment-start 0 
     java -jar $GATK HaplotypeCaller  -I $GATK_REALIGNTARGETSFILTCLIPPED -R $REFGENOME -O $FINAL_CALLS
+    $VARDICT/VarDict -b $BQSR_BAM -G $REFGENOME -N $SAMPLE_NAME -h -f $AF_THR -c 1 -S 2 -E 3 $PANEL > $VARDICT_CALLS
+
 
 Convert VCF to Table with GATK
 
