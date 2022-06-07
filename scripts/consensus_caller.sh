@@ -88,7 +88,7 @@ do
     #SET READGROUPS AND STRUCTURE (USED FOR UMI DETERMINATION)
     RG_PU=`zcat $FIRST_FASTQ | head -n 1 | awk -F ":" '{ OFS="."; print $3, $4, $10; }' `
     READGROUP="@RG\tPL:ILLUMINA\tID:${RG_PU}\tPU:${RG_PU}\tSM:${SAMPLE_ID}"
-    READ_STRUCTURE='8B9M+T 8B+T' #https://github.com/fulcrumgenomics/fgbio/wiki/Read-Structures
+    READ_STRUCTURE='8M1S+T 8M1S+T' #https://github.com/fulcrumgenomics/fgbio/wiki/Read-Structures
 
     # #RUN FASTQC
     # fastqc $FIRST_FASTQ -o $FASTQC_OUT
