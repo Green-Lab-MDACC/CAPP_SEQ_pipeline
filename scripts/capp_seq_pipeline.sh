@@ -88,7 +88,7 @@ do
     ONEKG_INDEL=$WORKING_DIR/data/hg38/beta/Homo_sapiens_assembly38.known_indels.vcf.gz
     DBSNP=$WORKING_DIR/data/hg38/hg38_bundle/dbsnp_138.hg38.vcf.gz
     BAITS_INTERVAL=$WORKING_DIR/data/$PROJECT/Probes_Merged_hg38.interval_list
-    TARGETS_INERVAL=$WORKING_DIR/data/$PROJECT/Targets_Merged_hg38.interval_list
+    TARGETS_INTERVAL=$WORKING_DIR/data/$PROJECT/Targets_Merged_hg38.interval_list
     BAITS=$WORKING_DIR/data/$PROJECT/Probes_Merged_hg38.bed
     TARGETS=$WORKING_DIR/data/$PROJECT/Targets_Merged_hg38.bed
 
