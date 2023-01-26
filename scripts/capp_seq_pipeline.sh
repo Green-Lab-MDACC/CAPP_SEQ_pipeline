@@ -99,7 +99,7 @@ do
     VARDICT=$PWD/bnsugg/programs/VarDictJava/build/install/VarDict/bin
     #SET READGROUPS AND STRUCTURE (USED FOR UMI DETERMINATION)
     RG_PU=`zcat $FIRST_FASTQ | head -n 1 | awk -F ":" '{ OFS="."; print $3, $4, $10; }' `
-    READGROUP="@RG\tPL:ILLUMINA\tID:${RG_PU}\tPU:${RG_PU}\tSM:${SAMPLE_ID}"
+    READGROUP="@RG\tPL:ILLUMINA\tID:${RG_PU}\tPU:${RG_PU}\tSM:${SAMPLE_NAME}"
 
     #SPECICY READ STRUCTURE BASED ON UMI STRUCTURE
     READ_STRUCTURE='8M1S+T 8M1S+T' #https://github.com/fulcrumgenomics/fgbio/wiki/Read-Structures
@@ -250,7 +250,7 @@ do
 
     # #FILTER AND POST PROCESS CALL VARIANTS
     if [ -f "$VARIANTS_CALLED_TABLE" ] && [ -f "$FINAL_CALLS_TABLE" ] ; then
-        python $WORKING_DIR/scripts/seq_post_process.py ${SAMPLE_NAME} ${VARIANTS_CALLED_TABLE} ${FINAL_CALLS_TABLE} ${PONPATH} ${SAMPLE_ID} ${CONSENSUS}
+        python $WORKING_DIR/scripts/seq_post_process.py ${SAMPLE_NAME} ${VARIANTS_CALLED_TABLE} ${FINAL_CALLS_TABLE} ${PONPATH} ${PROJECT} ${CONSENSUS}
     fi
 
 
